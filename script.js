@@ -1,55 +1,57 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const burgerBtn = document.querySelector('.burger-menu');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const closeBtn = document.getElementById('closeMobileMenu');
-  const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-  const menuLinks = document.querySelectorAll('.mobile-menu-link');
-  const scrollUpBtn = document.querySelector('.scroll-btn.up');
-  const scrollDownBtn = document.querySelector('.scroll-btn.down');
+function init() {
+  // === 1. Перемикач теми ===
+  const toggleBtn = document.querySelector('.theme-toggle');
+  const html = document.documentElement;
 
-  // Відкриття меню
-  burgerBtn.addEventListener('click', () => {
-    mobileMenu.classList.add('open');
-    mobileMenuOverlay.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-  });
-
-  // Закриття меню
-  function closeMobileMenu() {
-    mobileMenu.classList.remove('open');
-    mobileMenuOverlay.style.display = 'none';
-    document.body.style.overflow = 'auto';
-  }
-
-  closeBtn.addEventListener('click', closeMobileMenu);
-  mobileMenuOverlay.addEventListener('click', closeMobileMenu);
-
-  // Закриття меню при кліку на посилання + прокрутка
-  menuLinks.forEach(link => {
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-      const targetId = link.getAttribute('href');
-      const targetSection = document.querySelector(targetId);
-
-      if (targetSection) {
-        targetSection.scrollIntoView({ behavior: 'smooth' });
-      }
-
-      closeMobileMenu();
-    });
-  });
-
-  // Прокрутка вгору
-  if (scrollUpBtn) {
-    scrollUpBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initialTheme = savedTheme ? savedTheme : (prefersDark ? 'dark' : 'light');
+  html.setAttribute('data-theme', initialTheme);
+  if (toggleBtn) {
+    toggleBtn.textContent = initialTheme === 'dark' ? '☀️' : '🌙';
+    toggleBtn.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggleBtn.textContent = next === 'dark' ? '☀️' : '🌙';
     });
   }
 
-  // Прокрутка вниз
-  if (scrollDownBtn) {
-    scrollDownBtn.addEventListener('click', () => {
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    });
+  // === 2. Оновлення рейтингу ===
+  const data = {
+    mainRating: 6.9,
+    mainVotes: 330,
+    imdb: { rating: 7.2, votes: "179 278" },
+    tmdb: { rating: 6.787, votes: 1804 },
+  };
+
+  function generateStars(rating) {
+    const stars = [];
+    const fiveScale = rating / 2;
+    for (let i = 0; i < 5; i++) {
+      stars.push(fiveScale >= i + 1 ? "★"
+        : fiveScale > i && fiveScale < i + 1 ? "☆" : "✩");
+    }
+    return stars.join("");
   }
-});
+
+  const elNum = document.querySelector(".rating-number-kino");
+  const elStars = document.querySelector(".rating-stars-kino");
+  const elVotes = document.querySelector(".rating-votes-kino");
+  const elImdb = document.querySelector(".imdb-rating");
+  const elTmdb = document.querySelector(".tmdb-rating");
+
+  if (elNum) elNum.textContent = data.mainRating.toFixed(1);
+  if (elStars) elStars.textContent = generateStars(data.mainRating);
+  if (elVotes) elVotes.textContent = `Голосів: ${data.mainVotes}`;
+  if (elImdb) elImdb.textContent = `${data.imdb.rating} (${data.imdb.votes})`;
+  if (elTmdb) elTmdb.textContent = `${data.tmdb.rating.toFixed(3)} (${data.tmdb.votes})`;
+}
+
+// Виконати init() або після події, або одразу, якщо DOM вже завантажений
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}

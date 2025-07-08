@@ -22,7 +22,7 @@
         <div class="search-bar">
           <input type="text" placeholder="Пошук по сайту..." />
           <button class="search-btn">🔍</button>
-          <!-- <button class="theme-toggle">🌙</button> -->
+          <button class="theme-toggle" aria-label="Переключити тему">🌙</button>
         </div>
 
         <nav class="main-nav">
@@ -254,50 +254,6 @@
         </div>
       </div>
     </footer>
-
-    <script>
-      const michaelClaytonRating = {
-        mainRating: 6.9,
-        mainVotes: 330,
-        imdb: { rating: 7.2, votes: "179 278" },
-        tmdb: { rating: 6.787, votes: 1804 },
-      };
-
-      function generateStars(rating) {
-        const stars = [];
-        const fiveScale = rating / 2;
-
-        for (let i = 0; i < 5; i++) {
-          if (fiveScale >= i + 1) {
-            stars.push("★");
-          } else if (fiveScale > i && fiveScale < i + 1) {
-            stars.push("☆");
-          } else {
-            stars.push("✩");
-          }
-        }
-
-        return stars.join("");
-      }
-
-      function updateRatingDisplay(data) {
-        document.querySelector(".rating-number-kino").textContent =
-          data.mainRating.toFixed(1);
-        document.querySelector(".rating-stars-kino").textContent =
-          generateStars(data.mainRating);
-        document.querySelector(
-          ".rating-votes-kino"
-        ).textContent = `Голосів: ${data.mainVotes}`;
-
-        document.querySelector(
-          ".imdb-rating"
-        ).textContent = `${data.imdb.rating} (${data.imdb.votes})`;
-        document.querySelector(
-          ".tmdb-rating"
-        ).textContent = `${data.tmdb.rating.toFixed(3)} (${data.tmdb.votes})`;
-      }
-
-      updateRatingDisplay(michaelClaytonRating);
-    </script>
+    <script src="./script.js"></script>
   </body>
 </html>

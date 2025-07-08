@@ -53,7 +53,23 @@ img {
   white-space: nowrap;
   width: 1px;
 }
+/* Переключення теми сайту між світлою і темною початок */
+:root {
+  /* Світла тема за замовчуванням */
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --container-bg: #f4f4f4;
+  --container-text: #333333;
+}
 
+html[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --container-bg: #1e1e1e;
+  --container-text: #dddddd;
+}
+
+/* Переключення теми сайту між світлою і темною кінець */
 body {
   margin: 0;
   padding: 0;
@@ -61,6 +77,9 @@ body {
   background-color: #121212;
   color: #fff;
   letter-spacing: 0.02em;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 a,
@@ -129,6 +148,10 @@ section {
 .container-search-bar-nav {
   flex-direction: column;
   gap: 8px;
+}
+
+.theme-toggle {
+  background-color: transparent;
 }
 
 .search-bar {
