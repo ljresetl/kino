@@ -56,9 +56,11 @@ img {
 
 body {
   margin: 0;
+  padding: 0;
   font-family: "Segoe UI", sans-serif;
   background-color: #121212;
   color: #fff;
+  letter-spacing: 0.02em;
 }
 
 a,
@@ -321,4 +323,84 @@ section {
   font-size: 16px;
   text-align: center;
   color: #b2ff59; /* світло-зелений */
+}
+
+/* block-new */
+
+.container-block-new {
+  background-color: #7c7676;
+  border-radius: 8px;
+
+  color: var(--tt);
+  letter-spacing: 0.02em;
+  font: 14px "Manrope", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.container-block-new-block {
+  display: flex;
+  gap: 40px;
+  /* padding-bottom: 20px; */
+}
+
+.container-block-new-h2 {
+  padding: 16px 0px 0px 0px;
+}
+
+.block-new-content {
+  text-align: left;
+}
+
+.container-block-new-h3 {
+  margin-bottom: 10px;
+}
+
+.container-block-new-img {
+  border-radius: 4px;
+}
+
+.container-block-new:last-child {
+  padding-bottom: 20px;
+}
+
+/* opis-kino-ua */
+
+.container-opis-kino-ua {
+  flex-direction: column;
+  text-align: left;
+  gap: 20px;
+}
+
+.opis-kino-ua-h3 {
+  font-size: 24px;
+}
+
+.opis-kino-ua-p {
+  font-size: 14px;
+}
+
+/* footer */
+
+.container-footer {
+  flex-direction: column;
+  gap: 30px;
+}
+
+.container-footer-btn {
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  background-color: #a14f4f;
+  color: #fff;
+  width: 320px;
+}
+
+.container-footer-note {
+  font-weight: bold;
 }
