@@ -462,12 +462,11 @@ section {
 /* Кнопки */
 .nav-toggle-btn {
   position: fixed;
-  top: 8px;
+  top: 16px;
   right: 8px;
   z-index: 1001;
-  background: #e74c3c;
   color: white;
-  padding: 10px 15px;
+  padding: 0px;
   border: none;
   font-size: 18px;
   border-radius: 4px;
