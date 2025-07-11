@@ -146,9 +146,9 @@ section {
   color: #fff;
 }
 
-.icon-btn {
+/* .icon-btn {
   margin-right: 60px;
-}
+} */
 
 /* search-bar-nav */
 
@@ -444,7 +444,7 @@ section {
   top: 0;
   right: 0;
   width: 80%;
-  max-width: 400px;
+  max-width: 360px;
   height: 100%;
   background-color: #ffffff;
   color: #333;
@@ -460,7 +460,7 @@ section {
 }
 
 /* Кнопки */
-.nav-toggle-btn {
+/* .nav-toggle-btn {
   position: fixed;
   top: 16px;
   right: 8px;
@@ -471,7 +471,7 @@ section {
   font-size: 18px;
   border-radius: 4px;
   cursor: pointer;
-}
+} */
 
 .nav-close-btn {
   background: none;
