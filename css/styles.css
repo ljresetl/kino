@@ -212,6 +212,7 @@ section {
   border: none;
   cursor: pointer;
   width: 49%;
+  border-radius: 4px;
 }
 
 /* movies */
