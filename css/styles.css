@@ -463,7 +463,7 @@ section {
 .nav-toggle-btn {
   position: fixed;
   top: 8px;
-  right: 20px;
+  right: 8px;
   z-index: 1001;
   background: #e74c3c;
   color: white;
