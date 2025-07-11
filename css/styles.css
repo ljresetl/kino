@@ -54,12 +54,13 @@ img {
   width: 1px;
 }
 /* Переключення теми сайту між світлою і темною початок */
+/* Загальні змінні тем */
 :root {
-  /* Світла тема за замовчуванням */
   --bg-color: #ffffff;
   --text-color: #000000;
   --container-bg: #f4f4f4;
   --container-text: #333333;
+  --select-bg: #f6f6f6;
 }
 
 html[data-theme="dark"] {
@@ -67,6 +68,51 @@ html[data-theme="dark"] {
   --text-color: #ffffff;
   --container-bg: #1e1e1e;
   --container-text: #dddddd;
+  --select-bg: #333333;
+}
+
+/* Light theme overrides для конкретних елементів */
+html[data-theme="light"] .search-bar-nav {
+  --local-text: #222222;
+  --local-bg: #ffffff;
+}
+html[data-theme="light"] .container-movies {
+  --local-movies-bg: #e6e6e6;
+  --local-movies-text: #5c5c5c;
+}
+html[data-theme="light"] .filters-select {
+  --local-select-bg: #f6f6f6;
+  --local-select-text: #5c5c5c;
+}
+html[data-theme="light"] .container-movie-list {
+  --local-movielist-bg: #e6e6e6;
+  --local-movielist-text: #5c5c5c;
+}
+
+/* Застосування локальних змін */
+.search-bar-nav {
+  background: var(--local-bg);
+  color: var(--local-text);
+  transition: background 0.3s, color 0.3s;
+}
+
+.container-movies {
+  background: var(--local-movies-bg);
+  color: var(--local-movies-text);
+  transition: background 0.3s, color 0.3s;
+}
+
+.filters-select {
+  background: var(--local-select-bg);
+  color: var(--local-select-text);
+  border: 1px solid var(--local-select-text);
+  transition: background 0.3s, color 0.3s;
+}
+
+.container-movie-list {
+  background: var(--local-movielist-bg);
+  color: var(--local-movielist-text);
+  transition: background 0.3s, color 0.3s;
 }
 
 /* Переключення теми сайту між світлою і темною кінець */
