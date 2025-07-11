@@ -59,7 +59,7 @@ img {
   --bg-color: #ffffff;
   --text-color: #000000;
   --container-bg: #f4f4f4;
-  --container-text: #333333;
+  --container-text: #dddddd;
   --select-bg: #f6f6f6;
 }
 
@@ -224,11 +224,12 @@ section {
 
 .movie-card {
   max-width: 150px;
-  background: #1a1a1a;
+  background-color: #1a1a1a;
   border-radius: 6px;
   padding: 10px;
   text-align: center;
   box-shadow: 0 0 6px #000;
+  color: #dddddd;
 }
 
 .movies-img {
