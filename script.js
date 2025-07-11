@@ -47,6 +47,21 @@ function init() {
   if (elVotes) elVotes.textContent = `Голосів: ${data.mainVotes}`;
   if (elImdb) elImdb.textContent = `${data.imdb.rating} (${data.imdb.votes})`;
   if (elTmdb) elTmdb.textContent = `${data.tmdb.rating.toFixed(3)} (${data.tmdb.votes})`;
+
+  // === 3. Логіка відкриття/закриття меню ===
+  const navBtn = document.querySelector('.nav-toggle-btn');
+  const navPanel = document.querySelector('.navigation-panel');
+  const navClose = document.querySelector('.nav-close-btn');
+
+  if (navBtn && navPanel && navClose) {
+    navBtn.addEventListener('click', () => {
+      navPanel.classList.remove('hidden');
+    });
+
+    navClose.addEventListener('click', () => {
+      navPanel.classList.add('hidden');
+    });
+  }
 }
 
 // Виконати init() або після події, або одразу, якщо DOM вже завантажений
