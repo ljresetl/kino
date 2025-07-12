@@ -263,6 +263,22 @@ section {
   gap: 10px;
 }
 
+.filter-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0px !important;
+  padding: 0px !important;
+  background-color: #444 !important;
+  border: none !important;
+  width: 90% !important;
+}
+
+.filter-menu-li {
+  padding: 5px 0px;
+  color: #f6ecec;
+}
+
 .apply-btn,
 .reset-btn {
   flex: 1;
@@ -275,7 +291,46 @@ section {
   background-color: #a14f4f;
   color: #fff;
 }
+/* ксс для підменю початок */
+.filter-menu {
+  list-style: none;
+  margin: 5px 0 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  background: #fff;
+  position: absolute;
+  z-index: 10;
+  width: 200px;
+  max-height: 200px;
+  overflow-y: auto;
+}
 
+.hidden {
+  display: none;
+}
+
+.filter-item {
+  position: relative;
+  background-color: #2a2929;
+  padding: 10px;
+  border-radius: 6px;
+  color: #dddddd;
+  /* margin-bottom: 20px; */
+}
+.filter-menu li.active {
+  background-color: #2196f3;
+  color: rgb(31, 29, 29);
+}
+
+.nav-section-li {
+  color: #121212;
+}
+
+/* ксс для підменю кінець */
+
+.filter-toggle {
+  background-color: transparent;
+}
 /* movie-list */
 /* Основне оформлення */
 .container-movie-list {
@@ -460,18 +515,6 @@ section {
 }
 
 /* Кнопки */
-/* .nav-toggle-btn {
-  position: fixed;
-  top: 16px;
-  right: 8px;
-  z-index: 1001;
-  color: white;
-  padding: 0px;
-  border: none;
-  font-size: 18px;
-  border-radius: 4px;
-  cursor: pointer;
-} */
 
 .nav-close-btn {
   background: none;
