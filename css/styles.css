@@ -272,9 +272,11 @@ section {
   background-color: #444 !important;
   border: none !important;
   width: 90% !important;
+  cursor: pointer;
 }
 
 .filter-menu-li {
+  cursor: pointer;
   padding: 5px 0px;
   color: #f6ecec;
 }
@@ -336,15 +338,47 @@ section {
 .container-movie-list {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   background-color: #2a2a2a;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
+.movies-list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* .page-numbers {
+  display: flex;
+
+  align-items: center;
+} */
+
+.pagination {
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.movies-list-movie-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  /* min-width: 370px; */
+}
+
 .movie-poster-img {
   border-radius: 6px;
   width: 100%;
-  max-width: 150px;
+  /* text-align: center;
+  align-items: center; */
+  width: 100%;
   height: auto;
 }
 
@@ -355,7 +389,7 @@ section {
   justify-content: center;
   justify-content: space-between;
   align-items: center;
-  gap: 100px;
+  gap: 20px;
 }
 
 .movie-poster {
@@ -388,7 +422,6 @@ section {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  margin-bottom: 12px;
 }
 
 .page-numbers .page {
