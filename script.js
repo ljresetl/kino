@@ -60,7 +60,9 @@ function init() {
   const filterLabels = { genre: 'Жанр', country: 'Країна', year: 'Рік', date: 'Дата' };
 
   filterToggles.forEach(toggle => {
-    toggle.addEventListener('click', () => {
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation(); // Зупиняємо спливання, щоб документ не ловив клік
+
       filterToggles.forEach(otherToggle => {
         if (otherToggle !== toggle) {
           const menu = otherToggle.nextElementSibling;
@@ -94,6 +96,14 @@ function init() {
         });
       });
     }
+  });
+
+  // Додаємо слухача кліків на документ для закриття підменю при кліку поза ними
+  document.addEventListener('click', () => {
+    filterToggles.forEach(toggle => {
+      const menu = toggle.nextElementSibling;
+      if (menu?.classList.contains('filter-menu')) menu.classList.add('hidden');
+    });
   });
 
   // === 5. Кнопка "Підібрати" ===
