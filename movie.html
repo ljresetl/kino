@@ -136,40 +136,6 @@
         </div>
       </div>
     </section>
-    <section class="movies">
-      <div class="container container-movies">
-        <div class="movie-card">
-          <img
-            class="movies-img"
-            src="./images/foto2.png"
-            alt="Пункт призначення"
-            width="100"
-            height="150"
-          />
-          <p>Лего фільм 2</p>
-        </div>
-        <div class="movie-card">
-          <img
-            class="movies-img"
-            src="./images/foto2.png"
-            alt="Пункт призначення"
-            width="100"
-            height="150"
-          />
-          <p>Лего фільм 2</p>
-        </div>
-        <div class="movie-card">
-          <img
-            class="movies-img"
-            src="./images/foto2.png"
-            alt="Пункт призначення"
-            width="100"
-            height="150"
-          />
-          <p>Лего фільм 2</p>
-        </div>
-      </div>
-    </section>
 
     <section class="filters">
       <div class="container container-filters">
@@ -240,201 +206,59 @@
       </div>
     </section>
 
-    <section class="movies-list">
-      <div class="container container-movie-list">
-        <div
-          class="movies-list-movie-card"
-          data-id="1"
-          data-year="2007"
-          data-genre="Фільми, Трилери, Драми, Кримінал,
-                Детективи"
-          data-country="США"
-          data-date="2007-07-12"
-        >
-          <div class="foto-rating">
-            <div class="movie-poster">
-              <img
-                class="movie-poster-img"
-                src="./images/foto-movies2.png"
-                alt="Майкл Клейтон"
-                width="150"
-                height="220"
-              />
-            </div>
+    <!-- 📽️ Контент фільму -->
+    <div
+      class="container container-movie-list container-maikl-kleyton"
+      id="movie-details"
+    >
+      <p>Загрузка...</p>
+    </div>
 
-            <!-- Блок рейтингу -->
-            <div class="rating-box-kino">
-              <div class="main-rating-kino">
-                <div class="rating-circle-kino">
-                  <span class="rating-number-kino">–</span>
-                </div>
-                <div class="rating-stars-kino">★★★★★</div>
-                <p class="rating-votes-kino">Голосів: –</p>
-              </div>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const movieId = urlParams.get("id");
 
-              <div class="rating-external-kino">
-                <div class="rating-imdb-kino">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg"
-                    alt="IMDb"
-                    class="logo-imdb-kino"
-                  />
-                  <span class="imdb-rating">–</span>
-                </div>
-                <div class="rating-tmdb-kino">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/3/3b/TMDB_Logo.svg"
-                    alt="TMDB"
-                    class="logo-tmdb-kino"
-                  />
-                  <span class="tmdb-rating">–</span>
-                </div>
-              </div>
-            </div>
-            <!-- Блок рейтингу кінець -->
-          </div>
-          <div class="movie-info-block">
-            <div class="movie-meta">
-              <h2 class="movie-title">Майкл Клейтон (2007)</h2>
-              <p><strong>Оригінальна назва:</strong> Michael Clayton</p>
-              <p><strong>Рік:</strong> 2007</p>
-              <p><strong>Країна:</strong> США</p>
-              <p>
-                <strong>Жанр:</strong> Фільми, Трилери, Драми, Кримінал,
-                Детективи
-              </p>
-              <p><strong>Тривалість:</strong> 1 год 59 хв.</p>
-              <p><strong>Прем'єра (світ):</strong> 12 липня 2007</p>
-              <p><strong>Якість:</strong> BDRip</p>
-            </div>
-          </div>
+      const movies = {
+        1: {
+          title: "Майкл Клейтон",
+          originalTitle: "Michael Clayton",
+          year: "2007",
+          country: "США",
+          genre: "Трилер, Драма, Кримінал",
+          duration: "1 год 59 хв",
+          premiere: "12 липня 2007",
+          quality: "BDRip",
+          image: "./images/foto-movies2.png",
+          videoUrl:
+            "https://www.youtube.com/embed/5ZahFh3NrgMhttps://www.youtube.com/watch?v=s3E0p4bSI50&list=RDs3E0p4bSI50&start_radio=1", // приклад
+        },
+        // інші фільми...
+      };
+
+      const movie = movies[movieId];
+      const container = document.getElementById("movie-details");
+
+      if (!movie) {
+        container.innerHTML = "<h2>Фільм не знайдено</h2>";
+      } else {
+        container.innerHTML = `
+        <h1>${movie.title} (${movie.year})</h1>
+        <img src="${movie.image}" alt="${movie.title}" width="200" />
+        <p><strong>Оригінальна назва:</strong> ${movie.originalTitle}</p>
+        <p><strong>Країна:</strong> ${movie.country}</p>
+        <p><strong>Жанр:</strong> ${movie.genre}</p>
+        <p><strong>Тривалість:</strong> ${movie.duration}</p>
+        <p><strong>Прем'єра:</strong> ${movie.premiere}</p>
+        <p><strong>Якість:</strong> ${movie.quality}</p>
+
+        <h2>🎬 Дивитися онлайн</h2>
+        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+          <iframe src="${movie.videoUrl}" frameborder="0" allowfullscreen
+            style="position: absolute; top:0; left: 0; width: 100%; height: 100%;"></iframe>
         </div>
-
-        <div
-          class="movies-list-movie-card"
-          data-year="2025"
-          data-genre="Фільми, Пригоди, Бойовики, Фантастика, Netflix, Фільми 2025, Драми, Фентезі, Пригоди, Бойовики"
-          data-date="2025-07-12"
-          data-country="США"
-        >
-          <div class="foto-rating">
-            <div class="movie-poster">
-              <img
-                class="movie-poster-img"
-                src="./images/foto-movies3.png"
-                alt="Стара гвардія"
-                width="150"
-                height="220"
-              />
-            </div>
-
-            <!-- Блок рейтингу -->
-            <div class="rating-box-kino">
-              <div class="main-rating-kino">
-                <div class="rating-circle-kino">
-                  <span class="rating-number-kino">–</span>
-                </div>
-                <div class="rating-stars-kino">★★★★★</div>
-                <p class="rating-votes-kino">Голосів: –</p>
-              </div>
-
-              <div class="rating-external-kino">
-                <div class="rating-imdb-kino">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/6/69/IMDB_Logo_2016.svg"
-                    alt="IMDb"
-                    class="logo-imdb-kino"
-                  />
-                  <span class="imdb-rating">–</span>
-                </div>
-                <div class="rating-tmdb-kino">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/3/3b/TMDB_Logo.svg"
-                    alt="TMDB"
-                    class="logo-tmdb-kino"
-                  />
-                  <span class="tmdb-rating">–</span>
-                </div>
-              </div>
-            </div>
-            <!-- Блок рейтингу кінець -->
-          </div>
-          <div class="movie-info-block">
-            <div class="movie-meta">
-              <h2 class="movie-title">Стара гвардія 2 (2025)</h2>
-              <p><strong>Оригінальна назва:</strong> The Old Guard 2</p>
-              <p><strong>Рік:</strong> 2025</p>
-              <p><strong>Країна:</strong> США</p>
-              <p>
-                <strong>Жанр:</strong> Фільми, Netflix, Фільми 2025, Драми,
-                Фентезі, Пригоди, Бойовики, Фантастика
-              </p>
-              <p><strong>Тривалість:</strong> 1 год 49 хв.</p>
-              <p><strong>Прем'єра (світ):</strong> 1 липня 2025</p>
-              <p><strong>Якість:</strong> BDRip</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="no-movies-msg"
-        style="display: none; color: red; font-weight: bold; margin-top: 20px"
-      >
-        ФІЛЬМ НЕ ЗНАЙДЕНО
-      </div>
-
-      <div class="pagination">
-        <button class="load-more">ЗАГРУЗИТИ ЩЕ</button>
-        <div class="page-numbers">
-          <button class="page active">1</button>
-          <button class="page">2</button>
-          <button class="page">3</button>
-          <button class="page">4</button>
-          <button class="page">5</button>
-          <button class="page">6</button>
-          <button class="page">7</button>
-          <button class="page">8</button>
-          <button class="page">9</button>
-          <button class="page">10</button>
-          <button class="page">36</button>
-        </div>
-      </div>
-    </section>
-
-    <section class="block-new">
-      <div class="container container-block-new">
-        <h2 class="container-block-new-h2">Незабаром</h2>
-        <div class="container-block-new-block">
-          <img
-            src="./images/foto-block-new.png"
-            class="container-block-new-img"
-            alt="Постер фільму"
-          />
-          <div class="block-new-content">
-            <h3 class="container-block-new-h3">Супермен 2025</h3>
-            <p class="container-block-new-p">
-              Короткий опис фільму, наприклад: жанр, дата виходу або невеликий
-              анонс.
-            </p>
-          </div>
-        </div>
-        <div class="container-block-new-block">
-          <img
-            src="./images/foto-block-new2.png"
-            class="container-block-new-img"
-            alt="Постер фільму"
-          />
-          <div class="block-new-content">
-            <h3 class="container-block-new-h3">Панда патруль 2024</h3>
-            <p class="container-block-new-p">
-              Короткий опис фільму, наприклад: жанр, дата виходу або невеликий
-              анонс.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+      `;
+      }
+    </script>
 
     <section class="opis-kino-ua">
       <div class="container container-opis-kino-ua">

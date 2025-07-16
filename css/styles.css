@@ -370,6 +370,7 @@ section {
   display: flex;
   flex-direction: column;
   padding: 0px;
+  align-items: center;
   /* min-width: 370px; */
 }
 
@@ -609,3 +610,11 @@ section {
   gap: 5px 20px;
 }
 /* ПАНЕЛЬ НАВІГАЦІЇ ДЛЯ МОБІЛЬНОГО  - КІНЕЦЬ*/
+
+/* film-maikl-kleyton - початок */
+.container-maikl-kleyton {
+  display: flex;
+  gap: 5px;
+  padding-top: 20px;
+}
+/* film-maikl-kleyton - кінець */

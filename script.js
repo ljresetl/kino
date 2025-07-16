@@ -54,15 +54,14 @@ function init() {
     navClose.addEventListener('click', () => navPanel.classList.add('hidden'));
   }
 
-  // === 4. Фільтри: відкриття/вибір ===
+  // === 4. Фільтри ===
   const filterToggles = document.querySelectorAll('.filter-toggle');
   const filters = { genre: '', country: '', year: '', date: '' };
   const filterLabels = { genre: 'Жанр', country: 'Країна', year: 'Рік', date: 'Дата' };
 
   filterToggles.forEach(toggle => {
     toggle.addEventListener('click', (e) => {
-      e.stopPropagation(); // Зупиняємо спливання, щоб документ не ловив клік
-
+      e.stopPropagation();
       filterToggles.forEach(otherToggle => {
         if (otherToggle !== toggle) {
           const menu = otherToggle.nextElementSibling;
@@ -80,25 +79,20 @@ function init() {
         item.addEventListener('click', e => {
           e.preventDefault();
           e.stopPropagation();
-
-          // Скидаємо активність у цьому меню
           items.forEach(i => i.classList.remove('active'));
           item.classList.add('active');
-
           const category = toggle.closest('.filter-item')?.getAttribute('data-filter') || '';
           if (category) {
             const label = filterLabels[category] || capitalize(category);
             toggle.textContent = `${label} - ${item.textContent.trim()}`;
             filters[category] = item.textContent.trim();
           }
-
           menu.classList.add('hidden');
         });
       });
     }
   });
 
-  // Додаємо слухача кліків на документ для закриття підменю при кліку поза ними
   document.addEventListener('click', () => {
     filterToggles.forEach(toggle => {
       const menu = toggle.nextElementSibling;
@@ -110,6 +104,7 @@ function init() {
   const applyBtn = document.querySelector('.apply-btn');
   if (applyBtn) {
     applyBtn.addEventListener('click', () => {
+      resetSearchInput();
       console.log('--- Фільтрація ---');
       console.log('Filters:', filters);
       filterMovies(filters);
@@ -121,27 +116,8 @@ function init() {
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
       resetFilters();
+      resetSearchInput();
     });
-  }
-
-  // === Функція скидання фільтрів ===
-  function resetFilters() {
-    Object.keys(filters).forEach(key => filters[key] = '');
-    document.querySelectorAll('.filter-item').forEach(item => {
-      const toggle = item.querySelector('.filter-toggle');
-      const category = item.getAttribute('data-filter');
-      let defaultText = '';
-      switch (category) {
-        case 'genre': defaultText = 'Жанр'; break;
-        case 'year': defaultText = 'Виберіть рік'; break;
-        case 'country': defaultText = 'Країна'; break;
-        case 'date': defaultText = 'По даті публікації'; break;
-        default: defaultText = capitalize(category); break;
-      }
-      if (toggle) toggle.textContent = defaultText;
-      item.querySelectorAll('li').forEach(li => li.classList.remove('active'));
-    });
-    filterMovies(filters);
   }
 
   // === 7. Повідомлення "ФІЛЬМ НЕ ЗНАЙДЕНО" ===
@@ -163,81 +139,59 @@ function init() {
   // === 8. Фільтрація фільмів ===
   function filterMovies(filters) {
     if (!moviesList) return;
-
     let anyVisible = false;
     const movieCards = Array.from(moviesList.querySelectorAll('.movies-list-movie-card'));
 
     movieCards.forEach(movieEl => {
-      // Отримуємо атрибути для перевірки
       const year = (movieEl.getAttribute('data-year') || '').toLowerCase();
       const genre = (movieEl.getAttribute('data-genre') || '').toLowerCase();
       const country = (movieEl.getAttribute('data-country') || '').toLowerCase();
       const date = (movieEl.getAttribute('data-date') || '').toLowerCase();
 
-      // Перевіряємо всі фільтри - фільм показується лише якщо відповідає ВСІМ
       let visible = true;
       for (const [key, val] of Object.entries(filters)) {
-        if (!val) continue; // фільтр не застосовується
-
+        if (!val) continue;
         const valLower = val.toLowerCase();
-
         switch (key) {
           case 'year':
             if (year !== valLower) visible = false;
             break;
-          case 'genre': {
-            const genres = genre.split(',').map(s => s.trim());
-            if (!genres.includes(valLower)) visible = false;
+          case 'genre':
+            if (!genre.split(',').map(s => s.trim()).includes(valLower)) visible = false;
             break;
-          }
-          case 'country': {
-            const countries = country.split(',').map(s => s.trim());
-            if (!countries.includes(valLower)) visible = false;
+          case 'country':
+            if (!country.split(',').map(s => s.trim()).includes(valLower)) visible = false;
             break;
-          }
-          case 'date': {
-            // Для дати сортування, перевірка за фільтром не потрібна
+          case 'date':
             break;
-          }
         }
-
         if (!visible) break;
       }
 
       movieEl.style.display = visible ? '' : 'none';
       if (visible) anyVisible = true;
 
-      // === ВИДІЛЕННЯ СПІВПАДІНЬ ЧЕРВОНИМ ===
       const metaEl = movieEl.querySelector('.movie-meta');
       if (metaEl) {
-        metaEl.innerHTML = metaEl.textContent; // скидаємо форматування
+        metaEl.innerHTML = metaEl.textContent;
         let html = metaEl.innerHTML;
-
         for (const [key, val] of Object.entries(filters)) {
           if (!val) continue;
           const regex = new RegExp(`(${escapeRegExp(val)})`, 'gi');
           html = html.replace(regex, '<span style="color:red;">$1</span>');
         }
-
         metaEl.innerHTML = html;
       }
     });
 
-    // === Сортування ===
     if (filters.date) {
       const sortDescending = filters.date === 'Спочатку нові';
-
-      // Беремо тільки видимі фільми
       const visibleMovies = movieCards.filter(el => el.style.display !== 'none');
-
       visibleMovies.sort((a, b) => {
-        // Конвертуємо data-year в число (int)
         const yearA = parseInt(a.getAttribute('data-year')) || 0;
         const yearB = parseInt(b.getAttribute('data-year')) || 0;
         return sortDescending ? yearB - yearA : yearA - yearB;
       });
-
-      // Вставляємо відсортовані фільми в DOM по порядку
       visibleMovies.forEach(movie => {
         moviesContainer.appendChild(movie);
       });
@@ -249,10 +203,93 @@ function init() {
     }
   }
 
-  // === 9. Скидаємо фільтри і показуємо всі фільми при завантаженні сторінки ===
-  resetFilters();
+  // === 9. Пошук по назві фільму (сумісний з фільтрами) ===
+const searchInput = document.getElementById('searchInput');
+const searchButton = document.querySelector('.search-btn'); // Додаємо кнопку
 
-  // === Допоміжні функції ===
+function performSearch() {
+  clearFiltersUI();
+  const query = searchInput.value.toLowerCase().trim();
+  const movieCards = document.querySelectorAll('.movies-list-movie-card');
+
+  let anyVisible = false;
+
+  movieCards.forEach(card => {
+    const titleEl = card.querySelector('.movie-title');
+    if (!titleEl) return;
+
+    const fullTitle = titleEl.textContent.toLowerCase();
+    const cleanedTitle = fullTitle.replace(/\(\s*\d{4}\s*\)/, '').trim();
+
+    const match = fullTitle.includes(query) || cleanedTitle.includes(query);
+    card.style.display = match ? '' : 'none';
+
+    if (match) anyVisible = true;
+  });
+
+  const msgEl = document.querySelector('.no-movies-msg');
+  if (msgEl) {
+    msgEl.style.display = anyVisible ? 'none' : 'block';
+  }
+}
+
+// Виконуємо пошук при наборі
+searchInput.addEventListener('input', performSearch);
+
+// Виконуємо пошук при кліку на кнопку
+searchButton.addEventListener('click', performSearch);
+
+
+  // === 10. Скидання фільтрів ===
+  function resetFilters() {
+    Object.keys(filters).forEach(key => filters[key] = '');
+    document.querySelectorAll('.filter-item').forEach(item => {
+      const toggle = item.querySelector('.filter-toggle');
+      const category = item.getAttribute('data-filter');
+      let defaultText = '';
+      switch (category) {
+        case 'genre': defaultText = 'Жанр'; break;
+        case 'year': defaultText = 'Виберіть рік'; break;
+        case 'country': defaultText = 'Країна'; break;
+        case 'date': defaultText = 'По даті публікації'; break;
+        default: defaultText = capitalize(category); break;
+      }
+      if (toggle) toggle.textContent = defaultText;
+      item.querySelectorAll('li').forEach(li => li.classList.remove('active'));
+    });
+    filterMovies(filters);
+  }
+
+  // Скидаємо інпут пошуку
+  function resetSearchInput() {
+    if (searchInput) {
+      searchInput.value = '';
+      const movieCards = moviesList.querySelectorAll('.movies-list-movie-card');
+      movieCards.forEach(card => card.style.display = '');
+      const msgEl = document.querySelector('.no-movies-msg');
+      if (msgEl) msgEl.style.display = 'none';
+    }
+  }
+
+  // Очищуємо UI фільтрів при пошуку
+  function clearFiltersUI() {
+    Object.keys(filters).forEach(key => filters[key] = '');
+    document.querySelectorAll('.filter-item').forEach(item => {
+      const toggle = item.querySelector('.filter-toggle');
+      const category = item.getAttribute('data-filter');
+      let defaultText = '';
+      switch (category) {
+        case 'genre': defaultText = 'Жанр'; break;
+        case 'year': defaultText = 'Виберіть рік'; break;
+        case 'country': defaultText = 'Країна'; break;
+        case 'date': defaultText = 'По даті публікації'; break;
+        default: defaultText = capitalize(category); break;
+      }
+      if (toggle) toggle.textContent = defaultText;
+      item.querySelectorAll('li').forEach(li => li.classList.remove('active'));
+    });
+  }
+
   function capitalize(str) {
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -261,6 +298,10 @@ function init() {
   function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
+
+  // === 11. Початкове скидання фільтрів і пошуку ===
+  resetFilters();
+  resetSearchInput();
 }
 
 // === Запуск після завантаження DOM ===
@@ -269,3 +310,13 @@ if (document.readyState === 'loading') {
 } else {
   init();
 }
+
+// Обробник кліку на картку фільму
+document.querySelectorAll('.movies-list-movie-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const movieId = card.dataset.id;
+    if (movieId) {
+      window.location.href = `movie.html?id=${movieId}`;
+    }
+  });
+});
