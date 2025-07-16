@@ -11,7 +11,7 @@ const movies = {
     premiere: '12 липня 2007',
     quality: 'BDRip',
     poster: './images/foto-movies2.png',
-    videoUrl: 'https://www.youtube.com/embed/eVgoZ3I1H9Y', // 🔴 заміни на свій
+    videoUrl: 'https://www.youtube.com/watch?v=s3E0p4bSI50&list=RDs3E0p4bSI50&start_radio=1', // 🔴 заміни на свій
   },
   // Можеш додати інші фільми за ID
 };

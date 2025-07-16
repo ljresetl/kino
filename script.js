@@ -320,3 +320,69 @@ document.querySelectorAll('.movies-list-movie-card').forEach(card => {
     }
   });
 });
+
+/// Обробник для сторінки з фільмом
+if (window.location.pathname.includes('movie.html')) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const movieId = urlParams.get("id");
+
+  // 🔧 Функція для перетворення YouTube watch URL у embed URL
+  function convertToEmbed(url) {
+    try {
+      const urlObj = new URL(url);
+      const videoId = urlObj.searchParams.get("v");
+      return `https://www.youtube.com/embed/${videoId}`;
+    } catch (e) {
+      return ""; // якщо URL не валідний
+    }
+  }
+
+  const movies = {
+    1: {
+      title: "Майкл Клейтон",
+      originalTitle: "Michael Clayton",
+      year: "2007",
+      country: "США",
+      genre: "Трилер, Драма, Кримінал",
+      duration: "1 год 59 хв",
+      premiere: "12 липня 2007",
+      quality: "BDRip",
+      image: "./images/foto-movies2.png",
+      // звичайна YouTube-ссилка (можна копіювати з браузера)
+      videoUrl: "https://www.youtube.com/watch?v=s3E0p4bSI50&list=RDs3E0p4bSI50&start_radio=1",
+    },
+    // інші фільми...
+  };
+
+  const movie = movies[movieId];
+  const container = document.getElementById("movie-details");
+
+  if (container) {
+    if (!movie) {
+      container.innerHTML = "<h2>Фільм не знайдено</h2>";
+    } else {
+      const embedUrl = convertToEmbed(movie.videoUrl);
+      container.innerHTML = `
+        <h1>${movie.title} (${movie.year})</h1>
+        <img src="${movie.image}" alt="${movie.title}" width="200" />
+        <p><strong>Оригінальна назва:</strong> ${movie.originalTitle}</p>
+        <p><strong>Країна:</strong> ${movie.country}</p>
+        <p><strong>Жанр:</strong> ${movie.genre}</p>
+        <p><strong>Тривалість:</strong> ${movie.duration}</p>
+        <p><strong>Прем'єра:</strong> ${movie.premiere}</p>
+        <p><strong>Якість:</strong> ${movie.quality}</p>
+
+        <h2>🎬 Дивитися онлайн</h2>
+        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+          <iframe 
+            src="${embedUrl}" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen
+            style="position: absolute; top:0; left: 0; width: 100%; height: 100%;">
+          </iframe>
+        </div>
+      `;
+    }
+  }
+}
